@@ -1,0 +1,55 @@
+﻿@model IEnumerable<IdeasRepository.Models.IdeaRecord>
+
+@{
+    ViewData["Title"] = "Removement requests";
+}
+
+<h2>Removement requests</h2>
+
+<p>
+    <a asp-action="Index">Back to List</a>
+</p>
+
+@foreach (var item in Model)
+{
+    <div>
+        <h4>@item.Title</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(modelItem => item.Text)
+            </dt>
+            <dd>
+                @Html.Raw(item.Text)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(modelItem => item.Date)
+            </dt>
+            <dd>
+                @Html.DisplayFor(modelItem => item.Date)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(modelItem => item.Author)
+            </dt>
+            <dd>
+                @Html.DisplayFor(modelItem => item.Author.UserName)
+            </dd>
+        </dl>
+    </div>
+    <p>
+        <form asp-action="Manage" asp-route-id="@item.ID">
+            <input type="submit" value="Delete" class="btn btn-default" name="@ButtonType.Delete"/> |
+            @if (User.IsInRole("Administrator"))
+            {
+                <input type="submit" value="Restore" class="btn btn-default" name="@ButtonType.Restore"/><text> |</text>
+                <input type="submit" value="Archive" class="btn btn-default" name="@ButtonType.Archive"/>
+            }
+            else
+            {
+                <input type="submit" value="Cancel" class="btn btn-default" name="@ButtonType.Archive"/>
+            }
+        </form>
+       
+    </p>
+}
+

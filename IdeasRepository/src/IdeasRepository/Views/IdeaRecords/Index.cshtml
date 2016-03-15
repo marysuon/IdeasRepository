@@ -1,0 +1,87 @@
+@model IEnumerable<IdeasRepository.Models.IdeaRecord>
+
+@{
+    ViewData["Title"] = "Ideas List";
+}
+
+<h2>Ideas List</h2>
+
+<p>
+    <a asp-action="Create">Create New</a> |
+    <a asp-action="RemoveRequest">Removement requests(@ViewData["RemovementRequestsCount"])</a>
+    @if (User.IsInRole("Administrator"))
+    {
+        <text> |</text>
+        <a asp-action="ArchiveRecords">Archive records</a>
+    }
+</p>
+@if (User.IsInRole("Administrator"))
+{
+    <p>
+        <form asp-action="Index" asp-route-id="@ViewData["Page"]">
+            <input id="showAllRecords" name="showAllRecords" type="checkbox" value="true" @((bool)ViewData["ShowAllRecords"] ? "checked=\"checked\"" : "") onclick = "this.form.submit();"/>
+            <text>Show all records</text>
+        </form>
+</p>
+}
+<p>
+    
+    @for (int i = 0; i < (int) ViewData["Pages"]; i++)
+    {
+        if ((int)ViewData["Page"] == i)
+         {
+            <text> ... </text>
+        }
+        else
+        {
+            //<a asp-action="Index" asp-route-id="@i"> @(i + 1) </a>
+            @Html.ActionLink($" {(i + 1)} ", "Index", new {id = i, showAllRecords = @ViewData["ShowAllRecords"] })
+        }
+    }
+    
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Text)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Author)
+        </th>
+    </tr>
+    
+@foreach (var item in Model)
+{
+    string style = item.Status != IdeaRecordStatusEnum.Created ? "background-color:#ffe6e6" : null;
+    <tr style="@style">
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Prewiew)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Author.UserName)
+        </td>
+        <td>
+
+            <a asp-action="Details" asp-route-id="@item.ID">Details</a>
+            @if (item.Status == IdeaRecordStatusEnum.Created)
+            {
+                <text> |</text>
+                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a><text> |</text>
+                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+            }
+        </td>
+    </tr>
+}
+</table>

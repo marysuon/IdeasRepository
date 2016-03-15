@@ -1,0 +1,56 @@
+﻿@model IEnumerable<IdeasRepository.Models.IdeaRecord>
+
+@{
+    ViewData["Title"] = "Archive Records";
+}
+
+<h2>Archive Records</h2>
+<p>
+    <a asp-action="Index">Back to List</a>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Text)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Author)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @(@item.Text.Length <= 40 ? item.Text : item.Text.Substring(0, 40) + "...")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author.UserName)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                @if (item.Status == IdeaRecordStatusEnum.ArchiveByAdmin)
+                {
+                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                }
+                else if (item.Status == IdeaRecordStatusEnum.ArchiveByUser)
+                {
+                    <a asp-action="Restore" asp-route-id="@item.ID">Restore</a>
+                }
+            </td>
+        </tr>
+    }
+</table>
+
