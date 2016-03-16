@@ -102,7 +102,7 @@ namespace IdeasRepository
             });
 
             //заполняет базу данных тестовыми записями и пользователями
-            await SeedData.Initialize(app.ApplicationServices);
+            //await SeedData.Initialize(app.ApplicationServices);
         }
 
         // Entry point for the application.
