@@ -1,7 +1,8 @@
-Перезаполнение тестовыми данными на старте отключено. Чтобы включить, нужно раскомментировать вызов SeedData.Initialize в классе Startup в методе Configure.
+Refilling whith test data at the start is off. 
+Uncomment the call SeedData.Initialize in the Startup class in the method Configure to activate refilling.
 
-Автоматически создаваемые пользователи:
-login: UAdministratorTest@gmail.com	pass: User1!  - Администратор
+Automatically created users:
+login: AdministratorTest@gmail.com	pass: User1!  - Administrator
 login: User1Test@gmail.com		pass: User1!
 login: User2Test@gmail.com		pass: User1!
 
