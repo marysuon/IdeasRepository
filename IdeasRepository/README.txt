@@ -1,5 +1,5 @@
-Refilling whith test data at the start is off. 
-Uncomment the call SeedData.Initialize in the Startup class in the method Configure to activate refilling.
+Refilling whith test data on start is off. 
+Uncomment the call of SeedData.Initialize in the Startup class in the method Configure to activate refilling.
 
 Automatically created users:
 login: AdministratorTest@gmail.com	pass: User1!  - Administrator
